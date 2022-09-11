@@ -1,0 +1,1 @@
+export type IngredientType = "main" | "bun" | "sauce";

@@ -1,0 +1,37 @@
+.burger-constructor {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 250px);
+
+    &__scrollable-block{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        overflow-y: scroll;
+        flex-grow: 7;
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #8585AD;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: #2F2F37;
+        }
+    }
+
+    &__drag-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        list-style-type: none;
+    }
+
+    &__summary{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+    }
+    
+}

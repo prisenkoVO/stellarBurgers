@@ -1,0 +1,26 @@
+.app-header {
+    background-color: #1C1C21;
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 1280px;
+        margin: 0 auto;
+    }
+
+    &__btn-block {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    &__btn {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &_disable {
+            color: var(--text-inactive-color);
+            cursor: default;
+        }
+    }
+}
