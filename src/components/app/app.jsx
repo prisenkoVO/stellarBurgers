@@ -16,10 +16,17 @@ function App() {
 
   const getIngredients = async () => {
     await fetch(URL)
-      .then(res => res.ok
-        ? res.json()
-        : alert(`Ошибка ${res.status}`))
-      .then(({ data }) => setIngredients(data))
+      .then(response => response.ok
+        ? response.json()
+        : alert(`Ошибка ${response.status}`))
+      .then( response => {
+        if (response.success) {
+          return response.data;
+        } else {
+          alert('Произошла ошибка на сервере. Попробуйте позже.');
+        }
+      })
+      .then( data => setIngredients(data))
       .catch(error => console.error(error));
   };
 

@@ -14,7 +14,7 @@ const HeaderBtn = ({ title, children, isActive = false }) => (
 );
 
 HeaderBtn.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   isActive: PropTypes.bool
 }

@@ -26,9 +26,9 @@ function BurgerConstructor({ bun, mainList }) {
 
   React.useEffect(() => {
     if (bun && mainList) {
-      let total = 0;
-      [bun, ...mainList].forEach(value => total += value.price);
-      setTotalPrice(total);
+      const priceList = [bun, ...mainList].map(ingredient => ingredient.price);
+      const sum = priceList.reduce(( total, amount ) => total + amount);
+      setTotalPrice(sum);
     }
   }, [bun, mainList]);
 

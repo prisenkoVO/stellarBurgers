@@ -17,6 +17,6 @@ export const IngredientGroup = ({title, ingredients}) => {
 )};
 
 IngredientGroup.propTypes = {
-  title: PropTypes.string,
-  ingredients: PropTypes.arrayOf(ingredientProp)
+  title: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(ingredientProp).isRequired
 }

@@ -4,15 +4,16 @@ import BurgerIngredientsStyles from './burger-ingredients.module.scss';
 import { IngredientGroup } from './ingredient-group/ingredient-group';
 import PropTypes from 'prop-types';
 import { ingredientProp } from '../../utils/prop-types/ingredient-prop-type';
+import { BUN, MAIN, SAUCE } from '../../utils/constants/ingredient-types';
 
 
 function getListByGroup(groupName, ingredients) {
   switch (groupName) {
-    case 'Булки':
+    case BUN:
       return ingredients.filter(({ type }) => type === 'bun');
-    case 'Соусы':
+    case SAUCE:
       return ingredients.filter(({ type }) => type === 'sauce');
-    case 'Начинки':
+    case MAIN:
       return ingredients.filter(({ type }) => type === 'main');
     default:
       return ingredients;
@@ -22,8 +23,8 @@ function getListByGroup(groupName, ingredients) {
 function BurgerIngredients({ ingredients }) {
 
 
-  const [ current, setCurrent ] = React.useState('Булки');
-  const itemsList = ['Булки', 'Соусы', 'Начинки'];
+  const [ current, setCurrent ] = React.useState(BUN);
+  const itemsList = [BUN, SAUCE, MAIN];
 
   return (
     <>
@@ -45,7 +46,7 @@ function BurgerIngredients({ ingredients }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientProp)
+  ingredients: PropTypes.arrayOf(ingredientProp).isRequired
 }
 
 export default BurgerIngredients;
