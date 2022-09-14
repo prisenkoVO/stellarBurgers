@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 export const Modal = ({ children, onClose, header }) => {
   window.onkeydown = (event) => {
-    if (event.keyCode == 27) {
+    if (event.keyCode === 27) {
       onClose();
     }
   };
