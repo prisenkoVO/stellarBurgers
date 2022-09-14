@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export const OrderDetails = ({ orderId }) => {
     return (
-        <div className={`${OrderDetailsStyles} pt-30 pb-30 pr-25 pl-25`}>
+        <div className={`${OrderDetailsStyles.container} pt-30 pb-30 pr-25 pl-25`}>
             <span className={`${OrderDetailsStyles.id} text text_type_digits-large mb-8`}>{orderId}</span>
             <span className="text text_type_main-medium mb-15">идентификатор заказа</span>
             <span className="mb-15">
