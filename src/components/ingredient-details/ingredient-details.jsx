@@ -1,4 +1,4 @@
-import './ingredient-details.scss';
+import IngredientDetailsStyles from './ingredient-details.module.scss';
 import PropTypes from 'prop-types';
 
 export const IngredientDetails = (props) => {
@@ -10,27 +10,17 @@ export const IngredientDetails = (props) => {
     fat,
     carbohydrates
   } = props;
+  const featuresNameList = ['Калории,ккал', 'Белки, г', 'Жиры, г', 'Углеводы, г'];
+  const featuresList = [calories, proteins, fat, carbohydrates];
   return (
-    <div className="ingredient-details">
+    <div className={IngredientDetailsStyles.container}>
       <img src={image_large} alt={name} />
       <span className="text text_type_main-medium mt-4">{name}</span>
-      <div className="ingredient-details__features mt-8 text">
-        <span className="ingredient-details__feature">
-          <span className="text_type_main-default">Калории,ккал</span>
-          <span className="text_type_digits-default mt-2">{calories}</span>
-        </span>
-        <span className="ingredient-details__feature">
-          <span className="text_type_main-default">Белки, г</span>
-          <span className="text_type_digits-default mt-2">{proteins}</span>
-        </span>
-        <span className="ingredient-details__feature">
-          <span className="text_type_main-default">Жиры, г</span>
-          <span className="text_type_digits-default mt-2">{fat}</span>
-        </span>
-        <span className="ingredient-details__feature">
-          <span className="text_type_main-default">Углеводы, г</span>
-          <span className="text_type_digits-default mt-2">{carbohydrates}</span>
-        </span>
+      <div className={`${IngredientDetailsStyles.features} mt-8 text`}>
+        {featuresNameList.map((value, index) => <span key={index} className={IngredientDetailsStyles.feature}>
+          <span className="text_type_main-default">{value}</span>
+          <span className="text_type_digits-default mt-2">{featuresList[index]}</span>
+        </span>)}
       </div>
     </div>
   )

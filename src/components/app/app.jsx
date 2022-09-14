@@ -1,5 +1,5 @@
 import React from 'react';
-import './app.scss';
+import AppStyles from './app.module.scss';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -8,32 +8,35 @@ function App() {
 
   const [ingredients, setIngredients] = React.useState([]);
 
-  const url = 'https://norma.nomoreparties.space/api/ingredients';
-  
+  const URL = 'https://norma.nomoreparties.space/api/ingredients';
+
   React.useEffect(() => {
     getIngredients();
   }, []);
 
   const getIngredients = async () => {
-    await fetch(url)
-      .then((response) => response.json())
-      .then(({data}) => setIngredients(data));
+    await fetch(URL)
+      .then(res => res.ok
+        ? res.json()
+        : alert(`Ошибка ${res.status}`))
+      .then(({ data }) => setIngredients(data))
+      .catch(error => console.error(error));
   };
 
   return (
-    <div className="app">
-        <AppHeader/>
-        <div className="container">
-          <div className="ingredients__container">
-            <span className="text text_type_main-large mt-10">
-              Соберите бургер
-            </span>
-            <BurgerIngredients ingredients={ingredients}/>
-          </div>
-          <div className="ingredients__container">
-            <BurgerConstructor bun={ingredients[0]} mainList={ingredients.slice(2,8)}/>
-          </div>
+    <div className={AppStyles.app}>
+      <AppHeader />
+      <div className={AppStyles.container}>
+        <div className={AppStyles.container__column}>
+          <span className="text text_type_main-large mt-10">
+            Соберите бургер
+          </span>
+          <BurgerIngredients ingredients={ingredients} />
         </div>
+        <div className={AppStyles.container__column}>
+          <BurgerConstructor bun={ingredients[0]} mainList={ingredients.slice(2, 8)} />
+        </div>
+      </div>
     </div>
   );
 }

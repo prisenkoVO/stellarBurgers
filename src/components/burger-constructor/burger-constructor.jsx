@@ -1,4 +1,4 @@
-import './burger-constructor.scss';
+import BurgerConstructorStyles from './burger-constructor.module.scss';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
 import { CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -34,7 +34,7 @@ function BurgerConstructor({ bun, mainList }) {
 
   return (
     <>
-      <div className="burger-constructor mt-25">
+      <div className={`${BurgerConstructorStyles.container} mt-25`}>
         <span className="ml-8">
           <ConstructorElement
             type="top"
@@ -42,12 +42,11 @@ function BurgerConstructor({ bun, mainList }) {
             text={bun?.name}
             price={bun?.price}
             thumbnail={bun?.image}
-            style={{ flexGrow: '1', marginLeft: '32px' }}
           />
         </span>
-        <div className="burger-constructor__scrollable-block mt-4 mb-4">
+        <div className={`${BurgerConstructorStyles.scrollblock} mt-4 mb-4`}>
           {mainList.map(value =>
-            <li key={value._id} className="burger-constructor__drag-item">
+            <li key={value._id} className={BurgerConstructorStyles.dragItem}>
               <DragIcon type="primary" />
               <ConstructorElement
                 isLocked={false}
@@ -65,11 +64,10 @@ function BurgerConstructor({ bun, mainList }) {
             text={bun?.name}
             price={bun?.price}
             thumbnail={bun?.image}
-            style={{ flexGrow: '1' }}
           />
         </span>
       </div>
-      <div className="burger-constructor__summary mt-10 mr-10">
+      <div className={`${BurgerConstructorStyles.summary} mt-10 mr-10`}>
         <span className="text text_type_digits-medium mr-10">
           {totalPrice}
           <CurrencyIcon type="primary" />

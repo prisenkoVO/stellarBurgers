@@ -1,4 +1,4 @@
-.app-header {
+.header {
     background-color: #1C1C21;
 
     &__content {
@@ -9,18 +9,19 @@
         margin: 0 auto;
     }
 
-    &__btn-block {
-        display: flex;
+    &__btnblock {
+        display: flex; 
         align-items: center;
         gap: 8px;
     }
     &__btn {
         display: flex;
         align-items: center;
-        cursor: pointer;
-        &_disable {
-            color: var(--text-inactive-color);
-            cursor: default;
+        color: var(--text-inactive-color);
+        cursor: default;
+        &_active {
+            color: var(--text-primary-color);
+            cursor: pointer;
         }
     }
 }

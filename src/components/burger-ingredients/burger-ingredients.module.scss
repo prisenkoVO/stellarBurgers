@@ -1,4 +1,7 @@
-.ingredients__scroll-block {
+.groups {
+    display: flex;
+}
+.ingredients {
     overflow-y: scroll;
 
     &::-webkit-scrollbar {
