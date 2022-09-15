@@ -3,13 +3,19 @@ import ModalStyles from './modal.module.scss';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 export const Modal = ({ children, onClose, header }) => {
-  window.onkeydown = (event) => {
-    if (event.keyCode === 27) {
-      onClose();
-    }
-  };
+  
+
+  useEffect(() => {
+    const escListener = ({ key }) => key === 'Escape' ? onClose() : undefined;
+
+    window.addEventListener('keydown', escListener, true);
+    // Убиваем listener при размонтировании
+    return () => window.removeEventListener('keydown', escListener, true);
+  }, [onClose]);
+
   const headerBlock = (
     <span className={`${ModalStyles.header} text text_type_main-large mt-3`}>
       {header}

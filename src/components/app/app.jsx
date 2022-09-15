@@ -18,12 +18,12 @@ function App() {
     await fetch(URL)
       .then(response => response.ok
         ? response.json()
-        : alert(`Ошибка ${response.status}`))
+        : Promise.reject(`Ошибка ${response.status}`))
       .then( response => {
         if (response.success) {
           return response.data;
         } else {
-          alert('Произошла ошибка на сервере. Попробуйте позже.');
+          Promise.reject('Произошла ошибка на сервере. Попробуйте позже.');
         }
       })
       .then( data => setIngredients(data))
