@@ -1,0 +1,27 @@
+.header {
+    background-color: #1C1C21;
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 1280px;
+        margin: 0 auto;
+    }
+
+    &__btnblock {
+        display: flex; 
+        align-items: center;
+        gap: 8px;
+    }
+    &__btn {
+        display: flex;
+        align-items: center;
+        color: var(--text-inactive-color);
+        cursor: default;
+        &_active {
+            color: var(--text-primary-color);
+            cursor: pointer;
+        }
+    }
+}
