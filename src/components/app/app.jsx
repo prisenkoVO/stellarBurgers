@@ -9,6 +9,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { v4 as uuid} from 'uuid';
 import { addBun, addIngredient } from '../../services/actions/burger';
+import { TypesOfIngridient } from '../../utils/models/ingredient-types.enum';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function App() {
 
   const handleDrop = useCallback((item) => {
     const guid = uuid();
-    if (item.type === 'bun') {
+    if (item.type === TypesOfIngridient.BUN) {
       dispatch(addBun({...item, guid}));
     } else {
       dispatch(addIngredient({...item, guid}));

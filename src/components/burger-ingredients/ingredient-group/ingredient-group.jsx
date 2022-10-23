@@ -5,8 +5,6 @@ import { ingredientProp } from '../../../utils/prop-types/ingredient-prop-type';
 import React from 'react';
 
 export const IngredientGroup = React.forwardRef(({title, ingredients}, ref) => {
-  
-// export const IngredientGroup = React.forwardRef(({title, ingredientsList, openModal}, ref) => {
   return(
   <>
     <p className="text text_type_main-medium mb-6" id={title}>{title}</p>

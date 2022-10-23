@@ -5,27 +5,15 @@ import { IngredientGroup } from './ingredient-group/ingredient-group';
 import { BUN, MAIN, SAUCE } from '../../utils/constants/ingredient-types';
 import { useSelector } from 'react-redux';
 import { useInView } from "react-intersection-observer";
+import { TypesOfIngridient } from '../../utils/models/ingredient-types.enum';
 
-
-function getListByGroup(groupName, ingredients) {
-  switch (groupName) {
-    case BUN:
-      return ingredients.filter(({ type }) => type === 'bun');
-    case SAUCE:
-      return ingredients.filter(({ type }) => type === 'sauce');
-    case MAIN:
-      return ingredients.filter(({ type }) => type === 'main');
-    default:
-      return ingredients;
-  }
-}
 
 function BurgerIngredients() {
 
   const ingredients = useSelector(store => store.ingredients.items);
 
-  const itemsList = [BUN, SAUCE, MAIN];
-  const [current, setCurrent] = React.useState(itemsList[0]);
+  const groupName = [BUN, SAUCE, MAIN];
+  const [current, setCurrent] = React.useState(groupName[0]);
 
   const [bunRef, inViewBun] = useInView({
     threshold: .5
@@ -46,20 +34,35 @@ function BurgerIngredients() {
     else if (inViewMain) { setCurrent(MAIN) }
   }, [inViewBun, inViewSauce, inViewMain]);
 
+  function getListByGroup(groupName, ingredients) {
+    switch (groupName) {
+      case BUN:
+        return ingredients.filter(({ type }) => type === TypesOfIngridient.BUN);
+      case SAUCE:
+        return ingredients.filter(({ type }) => type === TypesOfIngridient.SAUCE);
+      case MAIN:
+        return ingredients.filter(({ type }) => type === TypesOfIngridient.MAIN);
+      default:
+        return ingredients;
+    }
+  }
+
+  const ingredientsGroup = (name, index) => {
+    const list = getListByGroup(name, ingredients);
+    return <IngredientGroup key={index} title={name} ingredients={list} ref={refs[index]} />;
+  };
+
   return (
     <>
       <div className={`${BurgerIngredientsStyles.groups} mt-5`}>
-        {itemsList.map((value, index) =>
-          <Tab key={index} value={value} active={current === value} onClick={() => setCurrent(itemsList[index])}>
+        {groupName.map((value, index) =>
+          <Tab key={index} value={value} active={current === value} onClick={() => setCurrent(groupName[index])}>
             {value}
           </Tab>
         )}
       </div>
       <div className={`${BurgerIngredientsStyles.ingredients} mt-10`} >
-        {itemsList.map((item, index) => {
-          const listByGroup = getListByGroup(item, ingredients);
-          return <IngredientGroup key={index} title={item} ingredients={listByGroup} ref={refs[index]} />;
-        })}
+        {groupName.map((name, index) => ingredientsGroup(name, index))}
       </div>
     </>
   );

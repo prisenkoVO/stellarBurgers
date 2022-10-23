@@ -3,6 +3,8 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
+import { ingredientProp } from '../../../utils/prop-types/ingredient-prop-type';
+import PropTypes from 'prop-types';
 
 const ADDED_INGREDIENT = 'addedIngredient';
 
@@ -71,6 +73,13 @@ function DraggableIngredient({ index, ingredient, deleteItem, moveCard }) {
       />
     </div>
   );
+}
+
+DraggableIngredient.propTypes = {
+  index: PropTypes.number.isRequired,
+  ingredient: ingredientProp,
+  deleteItem: PropTypes.func.isRequired,
+  moveCard: PropTypes.func.isRequired
 }
 
 export default DraggableIngredient;
