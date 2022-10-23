@@ -1,7 +1,7 @@
 import IngredientDetailsStyles from './ingredient-details.module.scss';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-export const IngredientDetails = (props) => {
+export const IngredientDetails = () => {
   const {
     image_large,
     name,
@@ -9,7 +9,10 @@ export const IngredientDetails = (props) => {
     proteins,
     fat,
     carbohydrates
-  } = props;
+  } = useSelector(store => ({
+    ...store.currentIngredient
+  }));
+
   const featuresNameList = ['Калории,ккал', 'Белки, г', 'Жиры, г', 'Углеводы, г'];
   const featuresList = [calories, proteins, fat, carbohydrates];
   return (
@@ -26,11 +29,3 @@ export const IngredientDetails = (props) => {
   )
 };
 
-IngredientDetails.propTypes = {
-  image_large: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired
-};

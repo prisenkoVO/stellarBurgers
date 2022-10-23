@@ -1,6 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
+    border-radius: 6px;
     height: calc(100% - 250px);
 
     &:last-child{
@@ -12,8 +13,7 @@
         div {
             width: 100%;
         }
-    }
-    
+    }   
 }
 
 .scrollblock{
@@ -33,9 +33,6 @@
 }
 
 .dragItem {
-    display: flex;
-    align-items: center;
-    gap: 8px;
     list-style-type: none;
 }
 
