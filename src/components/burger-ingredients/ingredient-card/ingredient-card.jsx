@@ -50,8 +50,8 @@ export const IngredientCard = (props) => {
         </div>
         <span className="text text_type_main-default">{props.name}</span>
         {
-          ingredients.filter(item => item?._id === props?._id).length ? 
-          <Counter count={ingredients.filter(item => item?._id === props?._id).length} size="default" /> : undefined
+          ingredients.filter(item => item?._id === props?._id).length &&
+          <Counter count={ingredients.filter(item => item?._id === props?._id).length} size="default" />
         }
       </div>
       {isModalOpen && modal}

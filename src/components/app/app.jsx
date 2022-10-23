@@ -4,7 +4,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import { useDispatch } from 'react-redux';
-import { getIngredients, getIngredientsFailed, getIngredientsSuccess } from '../../services/actions/ingredients';
+import { getIngredients } from '../../services/actions/ingredients';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { v4 as uuid} from 'uuid';
@@ -12,32 +12,11 @@ import { addBun, addIngredient } from '../../services/actions/burger';
 
 function App() {
   const dispatch = useDispatch();
-
-  const URL = 'https://norma.nomoreparties.space/api/ingredients';
   
   React.useEffect(() => {
-    dispatch(fetchIngredients());
+    dispatch(getIngredients());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const fetchIngredients = () => {
-    return (dispatch) => {
-      dispatch(getIngredients());
-
-      fetch(URL)
-        .then(
-          res => res.ok
-            ? res.json()
-            : dispatch(getIngredientsFailed())
-        )
-        .then(
-          res => res.success
-            ? dispatch(getIngredientsSuccess(res.data))
-            : dispatch(getIngredientsFailed())
-        )
-        .catch(error => dispatch(getIngredientsFailed()));
-    }
-  };
 
   const handleDrop = useCallback((item) => {
     const guid = uuid();

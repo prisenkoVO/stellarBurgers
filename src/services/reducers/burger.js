@@ -3,7 +3,7 @@ import { ADD_BUN, ADD_INGREDIENT, DELETE_FROM_CONSTRUCTOR, UPDATE_BURGER_INGREDI
 const initialState = {
     bun: null,
     mainList: [],
-    error: ''
+    amount: 0
 };
 
 export const burgerReducer = (state = initialState, action) => {

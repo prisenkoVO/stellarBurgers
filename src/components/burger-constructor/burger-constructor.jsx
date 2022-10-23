@@ -1,7 +1,7 @@
 import BurgerConstructorStyles from './burger-constructor.module.scss';
 import update from 'immutability-helper';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
@@ -9,10 +9,11 @@ import { useDrop } from 'react-dnd';
 import { deleteFromConstructor, updateBurgerIngredients } from '../../services/actions/burger';
 import { useDispatch, useSelector } from 'react-redux';
 import DraggableIngredient from './draggable-ingredient/draggable-ingredient';
+import { sendOrder } from '../../services/actions/order';
+import PropTypes from 'prop-types';
 
 function BurgerConstructor({ onDropHandler }) {
   const dispatch = useDispatch();
-  const [totalPrice, setTotalPrice] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const { bun, mainList } = useSelector(store => store.burger);
@@ -25,8 +26,8 @@ function BurgerConstructor({ onDropHandler }) {
     }
   });
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
+  const submit = () => {
+    dispatch(sendOrder([bun, ...mainList, bun], setModalOpen));
   }
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -37,17 +38,16 @@ function BurgerConstructor({ onDropHandler }) {
 
   const modal = (
     <Modal onClose={handleCloseModal}>
-      <OrderDetails orderId={132456} />
+      <OrderDetails />
     </Modal>
   );
 
-  React.useEffect(() => {
+  const totalPrice = useMemo(() => {
     if (bun && mainList) {
       const priceList = [bun, bun, ...mainList].map(ingredient => ingredient.price);
-      const sum = priceList.reduce((total, amount) => total + amount);
-      setTotalPrice(sum);
+      return priceList.reduce((total, amount) => total + amount);
     }
-  }, [bun, mainList]);
+  }, [bun, mainList])
 
   const moveCard = useCallback((dragIndex, hoverIndex) => {
     const updatedOrderList = update(mainList, {
@@ -62,7 +62,7 @@ function BurgerConstructor({ onDropHandler }) {
   return (
     <>
       <div className={`${BurgerConstructorStyles.container} mt-25`} ref={dropTarget}>
-        {bun ?
+        {bun &&
           <span className="ml-8">
             <ConstructorElement
               type="top"
@@ -71,7 +71,7 @@ function BurgerConstructor({ onDropHandler }) {
               price={bun?.price}
               thumbnail={bun?.image}
             />
-          </span> : undefined
+          </span>
         }
         <div className={`${BurgerConstructorStyles.scrollblock} mt-4 mb-4`}>
           {mainList.map((value, index) =>
@@ -80,7 +80,7 @@ function BurgerConstructor({ onDropHandler }) {
             </li>
           )}
         </div>
-        {bun ?
+        {bun &&
           <span className="ml-8">
             <ConstructorElement
               type="bottom"
@@ -89,21 +89,21 @@ function BurgerConstructor({ onDropHandler }) {
               price={bun?.price}
               thumbnail={bun?.image}
             />
-          </span> : undefined
+          </span>
         }
       </div>
       <div className={`${BurgerConstructorStyles.summary} mt-10 mr-10`}>
         {
-          totalPrice ?
+          totalPrice &&
             <>
               <span className="text text_type_digits-medium mr-10">
                 {totalPrice}
                 <CurrencyIcon type="primary" />
               </span>
-              <Button type="primary" size="large" onClick={handleOpenModal}>
+              <Button type="primary" size="large" onClick={submit} disabled={!mainList.length}>
                 Оформить заказ
               </Button>
-            </> : undefined
+            </>
         }
       </div>
       {isModalOpen && modal}
@@ -111,9 +111,8 @@ function BurgerConstructor({ onDropHandler }) {
   );
 }
 
-// BurgerConstructor.propTypes = {
-//   bun: ingredientProp,
-//   mainList: PropTypes.arrayOf(ingredientProp)
-// }
+BurgerConstructor.propTypes = {
+  onDropHandler: PropTypes.func.isRequired
+}
 
 export default BurgerConstructor;
