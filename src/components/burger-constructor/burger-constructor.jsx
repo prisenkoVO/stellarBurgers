@@ -27,7 +27,8 @@ function BurgerConstructor({ onDropHandler }) {
   });
 
   const submit = () => {
-    dispatch(sendOrder([bun, ...mainList, bun], setModalOpen));
+    const idList = [bun, ...mainList, bun].map(item => item._id);
+    dispatch(sendOrder(idList, setModalOpen));
   }
   const handleCloseModal = () => {
     setModalOpen(false);
