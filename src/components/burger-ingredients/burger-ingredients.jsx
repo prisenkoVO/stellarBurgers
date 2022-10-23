@@ -21,35 +21,36 @@ function getListByGroup(groupName, ingredients) {
 }
 
 function BurgerIngredients() {
+
   const ingredients = useSelector(store => store.ingredients.items);
 
-  const [current, setCurrent] = React.useState(BUN);
   const itemsList = [BUN, SAUCE, MAIN];
+  const [current, setCurrent] = React.useState(itemsList[0]);
 
   const [bunRef, inViewBun] = useInView({
-    threshold: 1
-  });
-  const [mainRef, inViewMain] = useInView({
-    threshold: 1
+    threshold: .5
   });
   const [sauceRef, inViewSauce] = useInView({
-    threshold: .8
+    threshold: .5
+  });
+  const [mainRef, inViewMain] = useInView({
+    threshold: 0.4
   });
 
-  const refs = [bunRef, mainRef, sauceRef];
+  const refs = [bunRef, sauceRef, mainRef];
 
 
   React.useEffect(() => {
     if (inViewBun) { setCurrent(BUN) }
+    else if (inViewSauce) { setCurrent(SAUCE) }
     else if (inViewMain) { setCurrent(MAIN) }
-    else { setCurrent(SAUCE) }
-  }, [inViewBun, inViewMain, inViewSauce]);
+  }, [inViewBun, inViewSauce, inViewMain]);
 
   return (
     <>
       <div className={`${BurgerIngredientsStyles.groups} mt-5`}>
         {itemsList.map((value, index) =>
-          <Tab key={index} value={value} active={current === value} onClick={setCurrent} onClick={() => setCurrent(itemsList[index])}>
+          <Tab key={index} value={value} active={current === value} onClick={() => setCurrent(itemsList[index])}>
             {value}
           </Tab>
         )}
@@ -57,7 +58,7 @@ function BurgerIngredients() {
       <div className={`${BurgerIngredientsStyles.ingredients} mt-10`} >
         {itemsList.map((item, index) => {
           const listByGroup = getListByGroup(item, ingredients);
-          return <IngredientGroup key={index} title={item} ingredients={listByGroup} innerRef={refs[index]} />;
+          return <IngredientGroup key={index} title={item} ingredients={listByGroup} ref={refs[index]} />;
         })}
       </div>
     </>

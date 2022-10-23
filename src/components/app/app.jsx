@@ -46,7 +46,7 @@ function App() {
     } else {
       dispatch(addIngredient({...item, guid}));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={AppStyles.app}>

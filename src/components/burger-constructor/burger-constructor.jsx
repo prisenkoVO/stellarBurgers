@@ -1,7 +1,7 @@
 import BurgerConstructorStyles from './burger-constructor.module.scss';
 import update from 'immutability-helper';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
@@ -12,8 +12,8 @@ import DraggableIngredient from './draggable-ingredient/draggable-ingredient';
 
 function BurgerConstructor({ onDropHandler }) {
   const dispatch = useDispatch();
-  const [totalPrice, setTotalPrice] = React.useState(0);
-  const [isModalOpen, setModalOpen] = React.useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const { bun, mainList } = useSelector(store => store.burger);
 
@@ -50,14 +50,14 @@ function BurgerConstructor({ onDropHandler }) {
   }, [bun, mainList]);
 
   const moveCard = useCallback((dragIndex, hoverIndex) => {
-    const newData = update(mainList, {
+    const updatedOrderList = update(mainList, {
       $splice: [
         [dragIndex, 1],
         [hoverIndex, 0, mainList[dragIndex]],
       ],
     })
-    dispatch(updateBurgerIngredients(newData));
-  }, [mainList])
+    dispatch(updateBurgerIngredients(updatedOrderList));
+  }, [mainList, dispatch])
 
   return (
     <>
