@@ -10,19 +10,29 @@ import { deleteFromConstructor, updateBurgerIngredients } from '../../services/a
 import { useDispatch, useSelector } from 'react-redux';
 import DraggableIngredient from './draggable-ingredient/draggable-ingredient';
 import { sendOrder } from '../../services/actions/order';
-import PropTypes from 'prop-types';
+import { v4 as uuid} from 'uuid';
+import { addBun, addIngredient } from '../../services/actions/burger';
+import { TypesOfIngridient } from '../../utils/models/ingredient-types.enum';
 
-function BurgerConstructor({ onDropHandler }) {
+function BurgerConstructor() {
   const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const { bun, mainList } = useSelector(store => store.burger);
 
+  const handleDrop = useCallback((item) => {
+    const guid = uuid();
+    if (item.type === TypesOfIngridient.BUN) {
+      dispatch(addBun({...item, guid}));
+    } else {
+      dispatch(addIngredient({...item, guid}));
+    }
+  }, [dispatch]);
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
-      onDropHandler(item);
+      handleDrop(item);
     }
   });
 
@@ -110,10 +120,6 @@ function BurgerConstructor({ onDropHandler }) {
       {isModalOpen && modal}
     </>
   );
-}
-
-BurgerConstructor.propTypes = {
-  onDropHandler: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;
