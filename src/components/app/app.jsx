@@ -37,7 +37,7 @@ function App() {
             <Route path="/register" component={RegisterPage} />
             <Route path="/forgot" component={ForgotPasswordPage} />
             <Route path="/reset" component={ResetPasswordPage} />
-            <Route path="/profile" component={ProfilePage} />
+            <Route path="/profile" component={ProfilePage} exact />
             <Route path="/ingredients/:id" component={IngredientDetailsPage} />
             <Route path="/" component={HomePage} exact />
             <Route component={NotFoundPage} />
