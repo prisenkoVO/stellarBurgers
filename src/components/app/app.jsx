@@ -17,6 +17,7 @@ import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import ProfilePage from '../../pages/profile/profile';
 import IngredientDetailsPage from '../../pages/ingredient-details/ingredient-details';
+import NotFoundPage from '../../pages/not-found/not-found';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,20 +29,21 @@ function App() {
 
   return (
     <div className={AppStyles.app}>
-      <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <Router>
+      <Router>
+        <AppHeader />
+        <DndProvider backend={HTML5Backend}>
           <Switch>
-            <Route path="/login" component={LoginPage}/>
-            <Route path="/register" component={RegisterPage}/>
-            <Route path="/forgot" component={ForgotPasswordPage}/>
-            <Route path="/reset" component={ResetPasswordPage}/>
-            <Route path="/profile" component={ProfilePage}/>
-            <Route path="/ingredients/:id" component={IngredientDetailsPage}/>
-            <Route path="/" component={HomePage}/>
+            <Route path="/login" component={LoginPage} />
+            <Route path="/register" component={RegisterPage} />
+            <Route path="/forgot" component={ForgotPasswordPage} />
+            <Route path="/reset" component={ResetPasswordPage} />
+            <Route path="/profile" component={ProfilePage} />
+            <Route path="/ingredients/:id" component={IngredientDetailsPage} />
+            <Route path="/" component={HomePage} exact />
+            <Route component={NotFoundPage} />
           </Switch>
-        </Router>
-      </DndProvider>
+        </DndProvider>
+      </Router>
     </div>
   );
 }

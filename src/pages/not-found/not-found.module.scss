@@ -1,0 +1,26 @@
+.content{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    flex-wrap: wrap-reverse;
+}
+
+.image{
+    width: 350px;
+}
+
+.descripton{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.title{
+    font-size: 112px;
+    font-weight: 700;
+}
+.text{
+    font-size: 32px;
+}

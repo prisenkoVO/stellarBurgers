@@ -2,7 +2,7 @@
 import styles from './profile.module.scss';
 
 function ProfilePage() {
-  return (<div>RegisterPage</div>);
+  return (<div>ProfilePage</div>);
 }
 
 export default ProfilePage;
