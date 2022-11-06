@@ -14,19 +14,20 @@ function RegisterPage() {
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.form}>
-        <span className="text text_type_main-medium">Регистрация</span>
+        <span className="text text_type_main-medium mb-6">Регистрация</span>
         <Input
           type="text"
           value={name}
           placeholder="Имя"
-          extraClass={styles.elem}
           onChange={e => setName(e.target.value)}
+          extraClass="mb-6"
         />
         <Input
           type="email"
           value={email}
           placeholder="E-mail"
           onChange={e => setEmail(e.target.value)}
+          extraClass="mb-6"
         />
         <Input
           type={passwordShow ? 'text' : 'password'}
@@ -35,9 +36,10 @@ function RegisterPage() {
           onIconClick={() => setPasswordShow(!passwordShow)}
           icon={passwordShow ? 'HideIcon' : 'ShowIcon'}
           onChange={e => setPassword(e.target.value)}
+          extraClass="mb-6"
         />
-        <Button>Зарегистрироваться</Button>
-        <span className="text text_type_main-default">
+        <Button extraClass="mb-20">Зарегистрироваться</Button>
+        <span className="text text_type_main-default text_color_inactive">
         Уже зарегистрированы?&nbsp;
         <Link to="/login" className="text text_type_main-default">Войти</Link>
         </span>
