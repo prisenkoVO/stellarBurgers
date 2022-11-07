@@ -35,7 +35,7 @@ function ProfilePage() {
           disabled={true}
         />
         <Input
-          type="login"
+          type="email"
           value={login}
           placeholder="Логин"
           icon="EditIcon"
