@@ -1,0 +1,9 @@
+{
+    "success": true,
+    "user": {
+        "email": "rsomotors@gmail.com",
+        "name": "Вячеслав"
+    },
+    "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjdmZTAyOWI1MThhMDAxYmI3ZGYzOSIsImlhdCI6MTY2Nzc1OTYxOCwiZXhwIjoxNjY3NzYwODE4fQ.il0SVggXawOXeYwlzfhdalBQSHdR2K2tbKhUgo29Z9A",
+    "refreshToken": "85f2ad6be2f8f5cebfcbed25426b9e360260eedfef298d1f0040dafd1cc41c96bb90dcf939561a71"
+}

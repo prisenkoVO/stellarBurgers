@@ -1,15 +1,33 @@
-// eslint-disable-next-line
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
+// eslint-disable-next-line
 import styles from './register.module.scss';
 import generalStyles from '../general.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { registration } from '../../services/actions/user';
+import { useDispatch, useSelector } from 'react-redux';
 
 function RegisterPage() {
   const [passwordShow, setPasswordShow] = useState(false);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { email: emailState } = useSelector(store => store.user);
+
+  const handlerClick = (form) => {
+    dispatch(registration(form));
+  }
+
+  useEffect(() => {
+    if (emailState) {
+      history.push('/');
+    }
+  }, [emailState, history]);
 
   return (
     <div className={generalStyles.container}>
@@ -38,10 +56,10 @@ function RegisterPage() {
           onChange={e => setPassword(e.target.value)}
           extraClass="mb-6"
         />
-        <Button extraClass="mb-20">Зарегистрироваться</Button>
+        <Button onClick={() => handlerClick({ name, email, password })} extraClass="mb-20">Зарегистрироваться</Button>
         <span className="text text_type_main-default text_color_inactive">
-        Уже зарегистрированы?&nbsp;
-        <Link to="/login" className="text text_type_main-default">Войти</Link>
+          Уже зарегистрированы?&nbsp;
+          <Link to="/login" className="text text_type_main-default">Войти</Link>
         </span>
       </div>
     </div>

@@ -5,8 +5,11 @@ import { NavLink } from 'react-router-dom';
 import styles from './profile.module.scss';
 
 function ProfilePage() {
+  // eslint-disable-next-line
   const [name, setName] = useState('Вячеслав');
+  // eslint-disable-next-line
   const [login, setLogin] = useState('test@test.ru');
+  // eslint-disable-next-line
   const [password, setPassword] = useState('123456');
   return (
     <div className={styles.container}>
