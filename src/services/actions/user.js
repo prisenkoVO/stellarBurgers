@@ -1,4 +1,4 @@
-import { registerUser } from "../../utils/api";
+import { logIn, registerUser } from "../../utils/api";
 import { setCookie } from "../../utils/functions/cookie-crud.function";
 
 export const REGISTRATION_REQUEST = 'REGISTRATION_REQUEST';
@@ -88,5 +88,24 @@ export function registration(form) {
                 }
             })
             .catch(() => dispatch(registrationFailed()));
+    }
+}
+
+export function authorization(form) {
+    return (dispatch) => {
+        dispatch(loginRequest());
+
+        logIn(form)
+            .then(res => {
+                if (res) {
+                    const { accessToken, refreshToken } = res;
+                    setCookie('accessToken', accessToken.split('Bearer ')[1]);
+                    localStorage.setItem('refreshToken', refreshToken);
+                    dispatch(loginSuccess(res.user));
+                } else {
+                    dispatch(loginFailed());
+                }
+            })
+            .catch(() => dispatch(loginFailed()));
     }
 }

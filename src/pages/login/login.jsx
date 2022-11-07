@@ -4,8 +4,9 @@ import generalStyles from '../general.module.scss';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { useState } from 'react';
-import { logIn } from '../../utils/api';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { authorization } from '../../services/actions/user';
 
 function LoginPage() {
   
@@ -13,16 +14,19 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
   const history = useHistory();
+  const { email: emailState } = useSelector(store => store.user);
 
   const handlerClick = (form) => {
-    logIn(form)
-      .then(value => {
-        if(value.success) {
-          history.replace({ pathname: '/' });
-        }
-      });
-  }
+    dispatch(authorization(form));
+  };
+  
+  useEffect(() => {
+    if (emailState) {
+      history.push('/');
+    }
+  }, [emailState, history]);
 
   return (
     <div className={generalStyles.container}>
