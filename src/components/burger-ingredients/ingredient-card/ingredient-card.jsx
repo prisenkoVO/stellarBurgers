@@ -1,16 +1,14 @@
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal } from '../../modal/modal';
-import React, { useCallback } from 'react';
 import IngredientCardStyles from './ingredient-card.module.scss';
-import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrag } from "react-dnd";
-import { addIngredientToPreview, deleteIngredientFromPreview } from '../../../services/actions/current-ingredient';
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export const IngredientCard = (props) => {
-  const [ isModalOpen, setModalOpen ] = React.useState(false);
-  const dispatch = useDispatch();
+  const location = useLocation();
+  const { _id: id } = props;
 
   const ingredients = useSelector(store => {
     const { burger } = store;
@@ -24,25 +22,15 @@ export const IngredientCard = (props) => {
     item: props
   });
 
-  const handleOpenModal = useCallback(() => {
-    dispatch(addIngredientToPreview({...props}));
-    setModalOpen(true);
-  }, [dispatch, props]);
-
-  const handleCloseModal = useCallback(() => {
-    dispatch(deleteIngredientFromPreview());
-    setModalOpen(false);
-  }, [dispatch]);
-  
-  const modal = (
-    <Modal header="Детали ингредиента" onClose={handleCloseModal}> 
-      <IngredientDetails />
-    </Modal>
-  );
-
   return (
     <>
-      <div className={IngredientCardStyles.card} onClick={handleOpenModal} ref={dragRef}>
+      <Link
+        to={{
+          pathname: `/ingredients/${id}`,
+          state: { background: location }
+        }}
+        className={IngredientCardStyles.card}
+        ref={dragRef}>
         <img src={props.image} alt={props.name} className="ml-4 mr-4"/>
         <div className={`${IngredientCardStyles.priceBlock} mt-1 mb-1`}>
           <span className="text text_type_digits-default mr-2">{props.price}</span>
@@ -53,12 +41,12 @@ export const IngredientCard = (props) => {
           ingredients.filter(item => item?._id === props?._id).length &&
           <Counter count={ingredients.filter(item => item?._id === props?._id).length} size="default" />
         }
-      </div>
-      {isModalOpen && modal}
+      </Link>
     </>
 )};
 
 IngredientCard.propTypes = {
+  _id: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired

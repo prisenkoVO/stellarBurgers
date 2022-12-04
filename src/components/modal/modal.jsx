@@ -3,10 +3,15 @@ import ModalStyles from './modal.module.scss';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Modal = ({ children, onClose, header }) => {
-  
+
+  const [domReady, setDomReady] = useState(false);
+
+  useEffect(() => {
+    setDomReady(true)
+  }, []);
 
   useEffect(() => {
     const escListener = ({ key }) => key === 'Escape' ? onClose() : undefined;
@@ -21,19 +26,21 @@ export const Modal = ({ children, onClose, header }) => {
       {header}
     </span>
   );
-  return createPortal(
-    <>
-      <div className={`${ModalStyles.modal} pt-10 pr-10 pb-15 pl-10`}>
-        {header ? headerBlock : ''}
-        <span className={ModalStyles.closeBtn}>
-          <CloseIcon onClick={onClose} type="primary" />
-        </span>
-        {children}
-      </div>
-      <ModalOverlay onClose={onClose} />
-    </>,
-    document.getElementById('modal-root')
-  );
+  return domReady
+    ? createPortal(
+      <>
+        <div className={`${ModalStyles.modal} pt-10 pr-10 pb-15 pl-10`}>
+          {header ? headerBlock : ''}
+          <span className={ModalStyles.closeBtn}>
+            <CloseIcon onClick={onClose} type="primary" />
+          </span>
+          {children}
+        </div>
+        <ModalOverlay onClose={onClose} />
+      </>,
+      document.getElementById('modal-root')
+    )
+    : null;
 };
 
 Modal.propTypes = {
