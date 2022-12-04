@@ -18,8 +18,9 @@ function LoginPage() {
   const history = useHistory();
   const { email: emailState } = useSelector(store => store.user);
 
-  const handlerClick = (form) => {
-    dispatch(authorization(form));
+  const submitForm = (e) => {
+    e.preventDefault();
+    dispatch(authorization({email, password}));
   };
   
   useEffect(() => {
@@ -32,23 +33,26 @@ function LoginPage() {
     <div className={generalStyles.container}>
       <div className={generalStyles.form}>
         <span className="text text_type_main-medium mb-6">Вход</span>
-        <Input
-          type={'email'}
-          value={email}
-          placeholder="E-mail"
-          onChange={e => setEmail(e.target.value)}
-          extraClass="mb-6"
-        />
-        <Input
-          type={passwordShow ? 'text' : 'password'}
-          value={password}
-          placeholder="Пароль"
-          onIconClick={() => setPasswordShow(!passwordShow)}
-          icon={passwordShow ? 'HideIcon' : 'ShowIcon'}
-          onChange={e => setPassword(e.target.value)}
-          extraClass="mb-6"
-        />
-        <Button onClick={() => handlerClick({email, password})} extraClass="mb-20">Войти</Button>
+        <form onSubmit={(e) => submitForm(e)}
+          className={generalStyles.form}>
+          <Input
+            type={'email'}
+            value={email}
+            placeholder="E-mail"
+            onChange={e => setEmail(e.target.value)}
+            extraClass="mb-6"
+          />
+          <Input
+            type={passwordShow ? 'text' : 'password'}
+            value={password}
+            placeholder="Пароль"
+            onIconClick={() => setPasswordShow(!passwordShow)}
+            icon={passwordShow ? 'HideIcon' : 'ShowIcon'}
+            onChange={e => setPassword(e.target.value)}
+            extraClass="mb-6"
+          />
+          <Button htmlType="submit" extraClass="mb-20">Войти</Button>
+        </form>
         <span className="text text_type_main-default text_color_inactive mb-4">
           Вы — новый пользователь?&nbsp;
           <Link to="/register" className="text text_type_main-default">Зарегистрироваться</Link>

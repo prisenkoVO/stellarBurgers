@@ -3,20 +3,12 @@
     width: 1240px;
     margin: 120px auto 0 auto;
 }
-.nav {
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-}
 .main {
     svg {
+        cursor: pointer;
         fill: #F2F2F3;
     }
 }
-.btn {
-    padding: 16px;
-}
-
-.btn_active {
-    color: #F2F2F3;
+.btnBlock{
+    float: right;
 }

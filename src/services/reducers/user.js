@@ -13,16 +13,22 @@ import {
     GET_USER_FAILED,
     GET_TOKEN_REQUEST,
     GET_TOKEN_SUCCESS,
-    GET_TOKEN_FAILED
+    GET_TOKEN_FAILED,
+    EDIT_USER_REQUEST,
+    EDIT_USER_SUCCESS,
+    EDIT_USER_FAILED
 } from "../actions/user";
 
 const initialState = {
     name: '',
     email: '',
+
+    checkAuth: false,
     registrationFailed: false,
     loginFailed: false,
     logoutFailed: false,
     getUserFailed: false,
+    editUserFailed: false,
     getTokenFailed: false
 }
 
@@ -80,12 +86,31 @@ export const userReducer = (state = initialState, action) => {
             };
 
         case GET_USER_SUCCESS:
-            return { ...action.user };
+            return {
+                ...action.user,
+                checkAuth: true
+            };
 
         case GET_USER_FAILED:
             return {
                 ...state,
-                getUserFailed: true
+                getUserFailed: true,
+                checkAuth: true
+            };
+
+        case EDIT_USER_REQUEST:
+            return {
+                ...state,
+                editUserFailed: false
+            };
+
+        case EDIT_USER_SUCCESS:
+            return { ...action.user };
+
+        case EDIT_USER_FAILED:
+            return {
+                ...state,
+                editUserFailed: true
             };
 
         case GET_TOKEN_REQUEST:

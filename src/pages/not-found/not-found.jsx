@@ -12,7 +12,7 @@ function NotFoundPage() {
         <h1 className={styles.title}>404</h1>
         <p className={styles.text}>Ты не должен здесь быть</p>
         <Link to="/">
-          <Button type="primary" size="medium">
+          <Button htmlType="button" type="primary" size="medium">
             Вернуться на главную
           </Button>
         </Link>

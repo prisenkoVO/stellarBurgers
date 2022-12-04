@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
 // eslint-disable-next-line
 import styles from './reset-password.module.scss';
 import generalStyles from '../general.module.scss';
@@ -11,19 +12,29 @@ function ResetPasswordPage() {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
-  const handlerClick = (form) => {
-    resetPassword(form)
+  const history = useHistory();
+  const location = useLocation();
+
+  const submit = (e) => {
+    e.preventDefault();
+    resetPassword({password, token})
       .then(value => {
-        // if (value?.success) {
-        //   history.replace({ pathname: '/reset' });
-        // }
-        console.warn(value);
+        if (value?.success) {
+          history.replace({ pathname: '/' });
+        }
       })
   };
 
+  useEffect(() => {
+    if (location.state?.prevPath !== '/forgot') {
+      history.push({pathname: '/forgot'});
+    }
+  }, [history, location])
+
   return (
     <div className={generalStyles.container}>
-      <div className={generalStyles.form}>
+      <form onSubmit={(e) => submit(e)}
+        className={generalStyles.form}>
         <span className="text text_type_main-medium mb-6">Восстановление пароля</span>
         <Input
           type={passwordShow ? 'text' : 'password'}
@@ -41,12 +52,12 @@ function ResetPasswordPage() {
           onChange={e => setToken(e.target.value)}
           extraClass="mb-6"
         />
-        <Button onClick={() => handlerClick({password, token})} extraClass="mb-20">Сохранить</Button>
+        <Button htmlType="submit" extraClass="mb-20">Сохранить</Button>
         <span className="text text_type_main-default text_color_inactive">
           Вспомнили пароль?&nbsp;
           <Link to="/login" className="text text_type_main-default">Войти</Link>
         </span>
-      </div>
+      </form>
     </div>
   );
 }

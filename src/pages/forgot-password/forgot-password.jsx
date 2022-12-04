@@ -4,24 +4,27 @@ import generalStyles from '../general.module.scss';
 import { useState } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { forgotPassword } from '../../utils/api';
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const history = useHistory();
+  const location = useLocation();
 
-  const handlerClick = (email) => {
+  const submit = (e) => {
+    e.preventDefault();
     forgotPassword(email)
       .then(value => {
         if (value?.success) {
-          history.replace({ pathname: '/reset' });
+          history.replace({ pathname: '/reset', state: { prevPath: location.pathname } });
         }
       })
   };
   return (
     <div className={generalStyles.container}>
-      <div className={generalStyles.form}>
+      <form onSubmit={(e) => submit(e)}
+        className={generalStyles.form}>
         <span className="text text_type_main-medium mb-6">Восстановление пароля</span>
         <Input
           type="email"
@@ -30,12 +33,12 @@ function ForgotPasswordPage() {
           onChange={e => setEmail(e.target.value)}
           extraClass="mb-6"
         />
-        <Button onClick={() => handlerClick(email)} extraClass="mb-20">Восстановить</Button>
+        <Button htmlType="submit" extraClass="mb-20">Восстановить</Button>
         <span className="text text_type_main-default text_color_inactive">
         Вспомнили пароль?&nbsp;
         <Link to="/login" className="text text_type_main-default">Войти</Link>
         </span>
-      </div>
+      </form>
     </div>
   );
 }

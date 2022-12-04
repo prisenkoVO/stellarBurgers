@@ -1,3 +1,5 @@
+import { getCookie } from "./functions/cookie-crud.function";
+
 const api = 'https://norma.nomoreparties.space/api';
 
 // Загрузка списка ингредиентов
@@ -56,11 +58,49 @@ export function registerUser(form) {
 }
 
 // Авторизация пользователя
-export function logIn(form) {
+export function logInApi(form) {
     return fetch(`${api}/auth/login`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
+    })
+        .then(res => checkResult(res));
+}
+
+// Выход из системы
+export function logOutApi() {
+    const token = localStorage.getItem('refreshToken');
+    return fetch(`${api}/auth/logout`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ token })
+    })
+        .then(res => checkResult(res));
+}
+
+// Получение информации о пользователе
+export function getProfileApi() {
+    return fetch(`${api}/auth/user`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${getCookie('accessToken')}`
+        }
+    })
+        .then(res => checkResult(res));
+}
+
+// Изменение информации о пользователе
+export function editProfileApi(form) {
+    return fetch(`${api}/auth/user`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${getCookie('accessToken')}`
         },
         body: JSON.stringify(form)
     })

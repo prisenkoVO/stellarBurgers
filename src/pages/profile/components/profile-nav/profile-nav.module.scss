@@ -1,0 +1,15 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    span {
+        color: #8585AD;
+    }
+}
+.btn {
+    padding: 16px 0;
+}
+
+.btn_active {
+    color: #F2F2F3;
+}

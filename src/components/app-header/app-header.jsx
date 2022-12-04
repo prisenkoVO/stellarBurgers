@@ -10,7 +10,7 @@ const HeaderBtn = ({ title, href, children }) => (
     to={{ pathname: href }}
     className={`${HeaderStyles.header__btn} pt-4 pr-5 pb-4 pl-5`}
     activeClassName={HeaderStyles.header__btn_active}
-    exact>
+    exact={href === '/'}>
       <span className="mr-2">
         {children}
       </span>
