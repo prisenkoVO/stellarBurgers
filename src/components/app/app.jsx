@@ -22,6 +22,7 @@ import { ProtectedRoute } from '../protected-route/protected-route';
 import { getProfile } from '../../services/actions/user';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
+import IngredientDetailsPage from '../../pages/ingredient-details/ingredient-details';
 
 function App() {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ function App() {
           <Route path="/register" component={RegisterPage} isAuthRequired={false} />
           <Route path="/forgot" component={ForgotPasswordPage} isAuthRequired={false} />
           <Route path="/reset" component={ResetPasswordPage} isAuthRequired={false} />
-          <Route path="/ingredients/:id" component={IngredientDetails} />
+          <Route path="/ingredients/:id" component={IngredientDetailsPage} />
 
           <Route path="/" component={HomePage} exact />
 
@@ -66,11 +67,11 @@ function App() {
         </Switch>
         {
           background && (
-            <Route path="/ingredients/:id" children={
+            <Route path="/ingredients/:id">
               <Modal header="Детали ингредиента" onClose={handleCloseModal}>
                 <IngredientDetails />
               </Modal>
-            } />
+            </Route>
           )
         }
       </DndProvider>
