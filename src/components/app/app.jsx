@@ -55,10 +55,11 @@ function App() {
           <ProtectedRoute path="/profile" component={ProfilePage} exact />
           <ProtectedRoute path="/profile/orders" component={OrdersPage} exact />
 
-          <Route path="/login" component={LoginPage} isAuthRequired={false} />
-          <Route path="/register" component={RegisterPage} isAuthRequired={false} />
-          <Route path="/forgot" component={ForgotPasswordPage} isAuthRequired={false} />
-          <Route path="/reset" component={ResetPasswordPage} isAuthRequired={false} />
+          <ProtectedRoute path="/login" component={LoginPage} isAuthRequired={true} />
+          <ProtectedRoute path="/register" component={RegisterPage} isAuthRequired={true} />
+          <ProtectedRoute path="/forgot" component={ForgotPasswordPage} isAuthRequired={true} />
+          <ProtectedRoute path="/reset" component={ResetPasswordPage} isAuthRequired={true} />
+          
           <Route path="/ingredients/:id" component={IngredientDetailsPage} />
 
           <Route path="/" component={HomePage} exact />

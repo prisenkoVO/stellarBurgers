@@ -1,34 +1,38 @@
 import { useSelector } from "react-redux";
-import { Redirect, Route } from "react-router";
+import { Redirect, Route, useLocation } from "react-router";
 import { Loader } from "../loader/loader";
 
-export function ProtectedRoute({ isAuthRequired = true, children, ...params }) {
+export function ProtectedRoute({ isAuthRequired = false, children, ...params }) {
     const { email, checkAuth } = useSelector(state => state.user);
+    const location = useLocation();
 
+    // Без авторизации не открывается логин
 
     if(!checkAuth) {
         return (<Loader/>);
     }
 
     if(isAuthRequired && email) {
+        const { from } = location.state || { from: { pathname: '/' } };
+
         return (
             <Route {...params}>
-                {children}
+                <Redirect to={from}></Redirect>
             </Route>
         );
     }
 
-    if(!isAuthRequired && email) {
+    if(!isAuthRequired && !email) {
         return (
-            <Route>
-                <Redirect to={'/'}/>
+            <Route {...params}>
+                <Redirect to={{pathname: '/login', state: { from: location }}}/>
             </Route>
         );
     }
 
     return (
-        <Route>
-            <Redirect to={'/login'}/>
+        <Route {...params}>
+            {children}
         </Route>
     );
 }
